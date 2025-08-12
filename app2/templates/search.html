@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tìm kiếm thời tiết</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="mb-4">🔍 Tra cứu thông tin thời tiết</h2>
+
+    <form method="POST" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="code" class="form-control" placeholder="Nhập mã thời tiết..." required>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+    </form>
+
+    {% if weather %}
+        {% if weather.error %}
+            <div class="alert alert-danger">{{ weather.error }}</div>
+        {% else %}
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    ✅ Thông tin thời tiết
+                </div>
+                <div class="card-body">
+                    <p><strong>Mã:</strong> {{ weather.code }}</p>
+                    <p><strong>Tên:</strong> {{ weather.name }}</p>
+                    <p><strong>Thời gian:</strong> {{ weather.time }}</p>
+                    <p><strong>Nhiệt độ(°C):</strong> {{ weather.temperature }}</p>
+                    <p><strong>Độ ẩm(%):</strong> {{ weather.humidity }}</p>
+                    <p><strong>Tốc độ gió(km/h):</strong> {{ weather.wind }}</p>
+                    <p><strong>Áp suất(mb):</strong> {{ weather.pressure }}</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

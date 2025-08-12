@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ weather.code if weather else 'Thêm thời tiết' }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2>{{ 'Sửa thông tin thời tiết' if weather else 'Thêm thời tiết mới' }}</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <div class="row" >
+            {% if not weather %}
+            <div class="mb-3 col-6">
+                <label for="code" class="form-label">Mã thời tiết</label>
+                <input type="text" class="form-control" id="code" name="code" required>
+            </div>
+            {% endif %}
+            <div class="mb-3 col-6">
+                <label for="name" class="form-label">Tên</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ weather.name if weather else '' }}" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="time" class="form-label">Thời gian</label>
+                <input type="datetime-local" class="form-control" id="time" name="time" value="{{ weather.time if weather else '' }}" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="temperature" class="form-label">Nhiệt độ(°C)</label>
+                <input type="number" class="form-control" id="temperature" name="temperature" value="{{ weather.temperature if weather else '' }}" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="humidity" class="form-label">Độ ẩm(%)</label>
+                <input type="number" class="form-control" id="humidity" name="humidity" value="{{ weather.humidity if weather else '' }}" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="wind" class="form-label">Tốc độ gió(km/h)</label>
+                <input type="number" class="form-control" id="wind" name="wind" value="{{ weather.wind if weather else '' }}" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="pressure" class="form-label">Áp suất(mb)</label>
+                <input type="number" class="form-control" id="pressure" name="pressure" value="{{ weather.pressure if weather else '' }}" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">{{ 'Cập nhật' if weather else 'Thêm mới' }}</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
