@@ -94,26 +94,7 @@ def delete(code):
     flash('Xóa thành công!', 'success')
     return redirect(url_for('index'))
 
-# API: Lấy danh sách 
-@app.route('/api/weathers', methods=['GET'])
-def get_all():
-    weathers = db.collection('weathers').stream()
-    result = []
-    for w in weathers:
-        data = w.to_dict()
-        data['code'] = w.id
-        result.append(data)
-    return jsonify(result)
 
-# API: Tìm sinh viên theo mã
-@app.route('/api/weathers/<code>', methods=['GET'])
-def get_weather(code):
-    doc = db.collection('weathers').document(code).get()
-    if doc.exists:
-        data = doc.to_dict()
-        data['code'] = code
-        return jsonify(data)
-    return jsonify({'error': 'Không tìm thấy thông tin thời tiết.'}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
